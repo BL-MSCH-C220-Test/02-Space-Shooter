@@ -7,6 +7,8 @@ Includes WASD mappings (up, left, down, right), space for weapon 1, and control 
 
 Uses assets from [https://kenney.nl/assets/space-shooter-extension](https://kenney.nl/assets/space-shooter-extension).
 Background image downloaded from wikimedia [https://upload.wikimedia.org/wikipedia/commons/6/6e/Veil_Nebula_-_NGC6960.jpg](https://upload.wikimedia.org/wikipedia/commons/6/6e/Veil_Nebula_-_NGC6960.jpg). CC Licensed by Ken Crawford.
+Explosion animation by Cuzco. Downloaded from [https://opengameart.org/content/explosion](https://opengameart.org/content/explosion)
+
 
 ## References
 
