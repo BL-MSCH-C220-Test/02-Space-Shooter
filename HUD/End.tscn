@@ -1,0 +1,15 @@
+[gd_scene format=2]
+
+[node name="End" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="."]
+margin_right = 1024.0
+margin_bottom = 500.0
+text = "You Died! Thanks for playing!"
+align = 1
+valign = 1
