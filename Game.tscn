@@ -1,65 +1,77 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://Assets/nebula.jpg" type="Texture" id=1]
 [ext_resource path="res://Assets/player.png" type="Texture" id=2]
 [ext_resource path="res://Player/Player.gd" type="Script" id=3]
-[ext_resource path="res://HUD/Game.gd" type="Script" id=4]
-[ext_resource path="res://Enemy/Enemies.gd" type="Script" id=5]
-[ext_resource path="res://HUD/HUD.gd" type="Script" id=6]
-[ext_resource path="res://Meteor/Meteors.gd" type="Script" id=7]
+[ext_resource path="res://Assets/enemy.png" type="Texture" id=4]
+[ext_resource path="res://Assets/exhaust2.png" type="Texture" id=5]
+[ext_resource path="res://Assets/exhaust1.png" type="Texture" id=6]
+[ext_resource path="res://Assets/exhaust3.png" type="Texture" id=7]
+[ext_resource path="res://Assets/shield3.png" type="Texture" id=8]
+
+[sub_resource type="SpriteFrames" id=1]
+animations = [ {
+"frames": [ ExtResource( 6 ), ExtResource( 5 ), ExtResource( 7 ) ],
+"loop": true,
+"name": "default",
+"speed": 5.0
+} ]
+
+[sub_resource type="CircleShape2D" id=2]
+radius = 70.0
 
 [node name="Game" type="Node2D"]
-script = ExtResource( 4 )
 
 [node name="Background" type="Sprite" parent="."]
 texture = ExtResource( 1 )
 centered = false
 
-[node name="HUD" type="Control" parent="."]
-margin_right = 40.0
-margin_bottom = 40.0
-script = ExtResource( 6 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="ColorRect" type="ColorRect" parent="HUD"]
-margin_top = 560.0
-margin_right = 1024.0
-margin_bottom = 600.0
-color = Color( 0, 0, 0, 0.501961 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Score" type="Label" parent="HUD"]
-margin_left = 10.0
-margin_top = 560.0
-margin_right = 53.0
-margin_bottom = 600.0
-text = "Score: "
-valign = 1
-
-[node name="Bullets" type="Node2D" parent="."]
-
-[node name="Enemies" type="Node2D" parent="."]
-script = ExtResource( 5 )
-
-[node name="Meteors" type="Node2D" parent="."]
-script = ExtResource( 7 )
-
-[node name="Explosions" type="Node2D" parent="."]
-
 [node name="Player" type="KinematicBody2D" parent="."]
-position = Vector2( 512, 550 )
-collision_layer = 2
-collision_mask = 0
 script = ExtResource( 3 )
 
+[node name="Thrust" type="AnimatedSprite" parent="Player"]
+visible = false
+position = Vector2( 0, 49.5 )
+rotation = 3.14159
+frames = SubResource( 1 )
+playing = true
+
+[node name="Area2D" type="Area2D" parent="Player"]
+collision_layer = 0
+collision_mask = 2
+
+[node name="Shield" type="Sprite" parent="Player/Area2D"]
+visible = false
+texture = ExtResource( 8 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player/Area2D"]
+shape = SubResource( 2 )
+
 [node name="Sprite" type="Sprite" parent="Player"]
-scale = Vector2( 0.2, 0.2 )
 texture = ExtResource( 2 )
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Player"]
-scale = Vector2( 0.2, 0.2 )
-polygon = PoolVector2Array( 8, -185.1, 8, -182.5, 25, -149.5, 25, -146.4, 38, -112.4, 38, 14.5, 48, 8.7, 50, 9.8, 50, 10.9, 58, 15.9, 58, 18.5, 61, 23.9, 61, 176.2, 54.7, 187, 38, 187, 38, 185.6, 28.1, 171.8, 21.2, 187, -21.2, 187, -28, 171.3, -28, 173, -29.9, 173, -38.3, 187, -54.7, 187, -61, 178.4, -61, 22.1, -58.3, 16, -56.7, 16, -48.8, 9, -44.2, 9, -38, 14.5, -38, -113.3, -23.4, -154, -22.2, -154, -6, -185.5, -6, -187, 5.1, -187 )
+polygon = PoolVector2Array( 9, -35, 16.2, -21.5, 16.9, -21.5, 49, 15.5, 49, 32.5, 23.8, 32.5, 18.8, 37.5, -18.6, 37.5, -22.9, 32.5, -39.8, 32.5, -49, 33.5, -49, 15.4, -15, -23.2, -15, -25, -9, -36.1, -9, -37.5, 9, -37.5 )
+
+[node name="Camera2D" type="Camera2D" parent="Player"]
+current = true
+process_mode = 0
+limit_left = 0
+limit_top = 0
+limit_right = 7148
+limit_bottom = 2930
+
+[node name="Ray" type="RayCast2D" parent="Player"]
+enabled = true
+
+[node name="Enemy" type="KinematicBody2D" parent="."]
+position = Vector2( 3000, 1000 )
+collision_layer = 2
+
+[node name="Sprite" type="Sprite" parent="Enemy"]
+texture = ExtResource( 4 )
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Enemy"]
+polygon = PoolVector2Array( 46.5, -24.4, 46.5, -4.9, 28.7, 42, 12.1, 42, 6.5, 38, 6.5, 33.7, 10.8, 19, -11.5, 19, -11.5, 19.7, -5.8, 39, -8.8, 39, -12.4, 42, -29.5, 42, -29.5, 41.4, -46.5, -1.5, -46.5, -24.4, -33.5, -41.7, -20.5, -42, -8.5, -37.4, -8.5, -35.3, -5.2, -28, 4.5, -28, 10.3, -39, 13.9, -39, 18.7, -42, 33.5, -42 )
+[connection signal="body_entered" from="Player/Area2D" to="Player" method="_on_Area2D_body_entered"]
+[connection signal="body_exited" from="Player/Area2D" to="Player" method="_on_Area2D_body_exited"]
